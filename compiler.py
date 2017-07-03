@@ -1,6 +1,7 @@
 import os
 import time
 import sys
+
 from classes.setup import setup
 from classes.processing import processing
 from classes.classification import classification
@@ -11,9 +12,10 @@ from functions.base import function_end
 from functions.base import compile_information
 import spacy
 
-amount = sys.argv[1] #784425 = all
 
-setup = setup(int(amount))
+amount = sys.argv[1] #784425 = all
+print(amount)
+setup = setup(amount)
 
 f = open(setup.file_program_output, 'w')
  
@@ -71,6 +73,11 @@ if setup.MODULE_LEXICON_RANDOM == True:
 if setup.MODULE_WORD_ANALYZING == True:
 	start_time, function_name = function_start('word analyzing')
 	classifier.find_word_pos_amounts('good')
+	function_end(function_name, start_time, f)
+
+if setup.MODULE_ANALYZE_DOCUMENT == True:
+	start_time, function_name = function_start('analyze documents')
+	evaluation.evaluate_random_documents()
 	function_end(function_name, start_time, f)
 
 f.close() 
