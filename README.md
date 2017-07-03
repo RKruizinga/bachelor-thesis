@@ -14,7 +14,7 @@ python3 compiler.py AMOUNT (number)
 python3 compiler.py 50000
 
 4. OUTPUT
-data/AMOUNT/l1t1f2/export.csv (l1t1f2=potts lexicon, word tokenizer, features n-gram and punctuation)
+data/AMOUNT/l1t1f2/export.csv (l1t1f2=potts lexicon, word tokenizer, features n-gram and further normalization)
 
 5. ANALYSE FILE 
 export.csv
