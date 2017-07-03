@@ -1,7 +1,6 @@
 #library imports
 import json
 import nltk
-import spacy
 import string
 import random
 import csv
@@ -32,7 +31,7 @@ class processing:
 				data = json.load(data_file)	
 
 				for review in data['Reviews']:
-					if len(review['Ratings']) >= 7: #atleast 7 aspects should be rated in the review
+					if len(review['Ratings']) >= 6: #atleast 7 aspects should be rated in the review
 						if 'Title' in review: #so no errors occur
 							review_info[review['ReviewID']] = { 'Ratings': 	review['Ratings'],
 											    'Title': 	review['Title'],
@@ -44,7 +43,6 @@ class processing:
 	def check_json_size(self, file_path): #simple function to check the size of a JSON file
 		with open(file_path, 'r') as f:
 			data = json.load(f)
-			print(len(data))	
 
 	def check_raw_files(self):
 		hotel_list_files = listdir(self.setup.dir_data_raw)
@@ -98,6 +96,8 @@ class processing:
 				for review in manual_annotation_list(): #if the amount is 100, take the manual annotation list
 					if review in data:					
 						subset[review] = data[review]
+			
+				print(len(subset))
 			else:
 				if self.setup.unskewed_data == True:
 					self.setup.amount = self.setup.amount/5

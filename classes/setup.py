@@ -27,6 +27,7 @@ class setup:
 		self.MODULE_DOCUMENT_EVALUATION = True
 		self.MODULE_LEXICON_RANDOM = False
 		self.MODULE_WORD_ANALYZING = False
+		self.MODULE_ANALYZE_DOCUMENT = False
 
 	def configure_setup(self):
 		#l1 = Potts Lexicon
@@ -52,6 +53,24 @@ class setup:
 		#f3 = N-grams
 		self.features = 2 # default = 2
 		features_str = 'f' + str(self.features)
+
+		#l1t1f0 potts+word
+		#l1t1f1	potts+word+normalization
+		#l1t1f2 potts+word+normalization+n-gram
+		#l1t1f3	potts+word+n-gram
+		#l2t1f0 potts+word+expand
+		#l2t1f1	potts+word+normalization+expand
+		#l2t1f2 potts+word+normalization+n-gram+expand
+		#l2t1f3	potts+word+n-gram+expand
+
+		#l1t5f0 potts+spacy
+		#l1t5f1	potts+spacy+normalization
+		#l1t5f2 potts+spacy+normalization+n-gram
+		#l1t5f3	potts+spacy+n-gram
+		#l2t5f0 potts+spacy+expand
+		#l2t5f1	potts+spacy+normalization+expand
+		#l2t5f2 potts+spacy+normalization+n-gram+expand
+		#l2t5f3	potts+spacy+n-gram+expand
 
 		self.setup = lexicon_str + tokenizer_str + features_str
 	

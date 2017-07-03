@@ -38,7 +38,7 @@ class classification:
 					elif word[1] in ['bi', 'tri']: #convert bigrams and trigrams to uniform - others
 						word_list.append(word[0]+'/o')
 				
-				potts_sentiment, positive, negative = self.potts_lexicon(word_list, data[review]['Content'], data[review]['Ratings']['Overall'])
+				potts_sentiment, positive, negative = self.potts_lexicon(word_list)
 
 				if    potts_sentiment == 'positive':
 					data[review]['Sentiment'] = 'positive'
@@ -59,7 +59,21 @@ class classification:
 
 			json.dump(classified, f)
 
-	def potts_lexicon(self, sentence_tokenized, content, overall):		
+	def analyse_potts_lexicon_usage(self, tokens): #potts = potts-lexicon based classifier
+		
+		
+		word_list = []
+		for word in tokens: #this whole for loop is due to the position tagging of senti_synsets, which is not important for us
+					if word[1] in ['JJ', 'JJS', 'JJR']: #convert tags to adjectives
+						word_list.append(word[0]+'/a')
+					elif word[1] in ['RB', 'RBR', 'RBS', 'RP', 'WRB']: #convert tags to match adverbs
+						word_list.append(word[0]+'/r')
+					elif word[1] in ['bi', 'tri']: #convert bigrams and trigrams to uniform - others
+						word_list.append(word[0]+'/o')
+
+		potts_sentiment, positive, negative = self.potts_lexicon(word_list, True)
+
+	def potts_lexicon(self, sentence_tokenized, show_actions = False):		
 		with open(self.setup.file_lexicon, 'r') as f:
 			data = json.load(f)
 			pos_score = 0
@@ -88,6 +102,8 @@ class classification:
 									neg_score += data[optimized[1][b]]['NormedScore']
 									neg_ass.append(a)
 								assessed_keys.append(a)
+								if show_actions == True and data[optimized[1][b]]['NormedScore'] != 0:
+									print(data[optimized[1][b]]['NormedScore'], bi_tri[0]+'/'+bi_tri[1])
 
 						elif optimized[0][a] == optimized[1][b]:
 							if data[optimized[1][b]]['NormedScore'] > 0:
@@ -97,6 +113,8 @@ class classification:
 								neg_score += data[optimized[1][b]]['NormedScore']
 								neg_ass.append(a)
 							assessed_keys.append(a)
+							if show_actions == True and data[optimized[1][b]]['NormedScore'] != 0:
+								print(data[optimized[1][b]]['NormedScore'], bi_tri[0]+'/'+bi_tri[1])
 
 					if optimized[0][a] <= optimized[1][b]:
 						a += 1

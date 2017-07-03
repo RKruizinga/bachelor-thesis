@@ -6,6 +6,7 @@ import random
 from data.library.prettytable import PrettyTable
 from nltk.tokenize import word_tokenize
 import operator
+from classes.classification import classification
 
 #functions
 from functions.base import mean
@@ -545,3 +546,14 @@ class evaluation:
 					row['business_service'] = 'NA'
 				
 				writer.writerow(row)		
+
+
+	def evaluate_random_documents(self):
+		with open(self.setup.file_tokenized, 'r') as f:
+			data = json.load(f)
+			keys_data =list(data.keys())
+			print(data[keys_data[0]]['Content'])
+			classifier = classification(self.setup)
+			classification.analyse_potts_lexicon_usage(classifier, data[keys_data[0]]['Tags'])
+				
+				

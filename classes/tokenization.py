@@ -1,4 +1,5 @@
 import nltk
+import spacy
 from nltk.tokenize import treebank
 from nltk.tokenize import word_tokenize
 from nltk.tokenize import RegexpTokenizer
@@ -42,7 +43,6 @@ class tokenization:
 
 		if self.features in [2, 3]:
 			tags = self.ngrams(tokens, tags)
-
 		return tokens, tags
 
 	def treebank_tokenizer(self, review):
